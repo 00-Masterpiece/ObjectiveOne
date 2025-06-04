@@ -7,6 +7,17 @@
             <span class="fw-bold fs-4">ObjectiveOne</span>
         </a>
         <span class="text-muted d-none d-md-inline slogan">Your mission. One objective at a time.</span>
+        <div class="dropdown">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                {{ current_user.username[0]|upper }}
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="{{ url_for('main.profile') }}">View Profile</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('auth.change_password') }}">Change Password</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item text-danger" href="{{ url_for('auth.logout') }}">Logout</a></li>
+            </ul>
+        </div>
     </nav>
 
     <div class="mb-4 px-2">

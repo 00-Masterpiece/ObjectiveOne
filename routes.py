@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, redirect, url_for, request
+from flask import Blueprint, render_template, redirect, url_for, request, abort
+from flask_login import login_required, current_user
 from models import Goal, Completion, db
 from forms import GoalForm
 from datetime import date, timedelta, datetime
@@ -8,11 +9,12 @@ import calendar as cal_module
 main = Blueprint('main', __name__)
 
 @main.route('/')
+@login_required
 def index():
     today = date.today()
     week = [today + timedelta(days=i) for i in range(7)]
 
-    goals = Goal.query.all()
+    goals = Goal.query.filter_by(user_id=current_user.id).all()
     completions = Completion.query.with_entities(Completion.goal_id, Completion.date).all()
     completed_set = set((c.goal_id, c.date) for c in completions)
 
@@ -43,12 +45,14 @@ def index():
 
 
 @main.route('/add', methods=['GET', 'POST'])
+@login_required
 def add_goal():
     form = GoalForm()
     if form.validate_on_submit():
         validate_time_interval(form)
 
         new_goal = Goal(
+            user_id=current_user.id,
             name=form.name.data,
             days=",".join(form.days.data),
             color=form.color.data,
@@ -65,18 +69,19 @@ def add_goal():
 
 
 @main.route('/complete', methods=['POST'])
+@login_required
 def complete_goal():
     goal_id = int(request.form['goal_id'])
     day = request.form['date']
 
-    existing = Completion.query.filter_by(goal_id=goal_id, date=day).first()
+    existing = Completion.query.filter_by(user_id=current_user.id, goal_id=goal_id, date=day).first()
 
     if existing:
         db.session.delete(existing)  # ❌ Uncheck
         db.session.commit()
         return redirect(url_for('main.index'))  # No confetti
     else:
-        completion = Completion(goal_id=goal_id, date=day)
+        completion = Completion(user_id=current_user.id, goal_id=goal_id, date=day)
         db.session.add(completion)  # ✅ Check
         db.session.commit()
         return redirect(url_for('main.index') + "?completed=true")  # Confetti
@@ -84,13 +89,18 @@ def complete_goal():
 
 
 @main.route('/edit/<int:goal_id>', methods=['GET', 'POST'])
+@login_required
 def edit_goal(goal_id):
     goal = Goal.query.get_or_404(goal_id)
+    if goal.user_id != current_user.id:
+        abort(403)
+
     form = GoalForm(obj=goal)
 
     if form.validate_on_submit():
         validate_time_interval(form)
         
+        goal.user_id=current_user.id
         goal.name = form.name.data
         goal.days = ",".join(form.days.data) if isinstance(form.days.data, list) else form.days.data
 
@@ -125,13 +135,26 @@ def edit_goal(goal_id):
     return render_template('edit.html', form=form, goal=goal)
 
 
-
 @main.route('/delete/<int:goal_id>', methods=['POST'])
+@login_required
 def delete_goal(goal_id):
     goal = Goal.query.get_or_404(goal_id)
+    if goal.user_id != current_user.id:
+        abort(403)
     
     Completion.query.filter_by(goal_id=goal.id).delete()
     db.session.delete(goal)
     db.session.commit()
 
     return redirect(url_for('main.index'))
+
+
+@main.route('/profile')
+@login_required
+def profile():
+    total_goals = Goal.query.filter_by(user_id=current_user.id).count()
+    completed = Completion.query.filter_by(user_id=current_user.id).count()
+
+    return render_template('profile.html', total=total_goals, completed=completed)
+
+

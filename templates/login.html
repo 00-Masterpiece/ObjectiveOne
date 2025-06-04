@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block content %}
+<div class="auth-container">
+    <h2 class="auth-title">Login to ObjectiveOne</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+
+        <div class="mb-3">
+            {{ form.username.label(class="form-label") }}
+            {{ form.username(class="form-control") }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.password.label(class="form-label") }}
+            {{ form.password(class="form-control") }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Login</button>
+        <a href="{{ url_for('auth.register') }}" class="btn btn-secondary">Create Account</a>
+    </form>
+</div>
+{% endblock %}

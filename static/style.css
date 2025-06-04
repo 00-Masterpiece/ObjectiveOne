@@ -176,6 +176,37 @@ h1, h2, h3, h4 {
     color: #888;
 }
 
+.auth-container {
+    max-width: 400px;
+    margin: 4rem auto;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.auth-title {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    color: #4FC3F7;
+}
+
+.profile-picture {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+}
+
+.file-input {
+    max-width: 180px;
+    margin: 0 auto;
+    font-size: 0.85rem;
+    padding: 0.25rem 0.5rem;
+}
+
 /*
 bright and energetic
 visually fun
