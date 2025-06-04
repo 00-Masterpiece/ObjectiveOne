@@ -1,0 +1,197 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #F9F9F9;
+    color: #333333;
+}
+
+a {
+    color: #4FC3F7;
+}
+
+a:hover {
+    color: #00B0FF;
+}
+
+
+/* Base */
+body {
+    background-color: #F9F9F9;
+    color: #333;
+}
+
+/* Headings */
+h1, h2, h3, h4 {
+    font-weight: 700;
+    color: #333;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: #4FC3F7;
+    border-color: #4FC3F7;
+}
+.btn-primary:hover {
+    background-color: #00B0FF;
+    border-color: #00B0FF;
+}
+
+.btn-danger {
+    background-color: #FF6B6B;
+    border-color: #FF6B6B;
+}
+.btn-danger:hover {
+    background-color: #FF4C4C;
+    border-color: #FF4C4C;
+}
+
+/* Forms */
+.form-control {
+    border-radius: 0.5rem;
+}
+
+/* Goal badge colors */
+.goal-badge {
+    padding: 0.5rem 0.75rem;
+    border-radius: 1rem;
+    font-weight: 500;
+    font-size: 0.95rem;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+}
+
+.hoverable-badge {
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hoverable-badge:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Calendar cells */
+.day-box {
+    background-color: white;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: 0.2s;
+}
+.day-box:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.day {
+    border: 1px solid #ccc;
+    padding: 1em;
+    margin: 0.5em;
+    border-radius: 8px;
+    width: 250px;
+    background: #f9f9f9;
+}
+
+.goal-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    padding: 0.4em;
+    margin: 0.3em 0;
+    border-radius: 8px;
+    color: white;
+}
+
+.hoverable-card {
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hoverable-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.completed {
+  background-color: #e0e0e0 !important;
+  color: #6c757d !important;  
+  border-left: 5px solid #28a745;
+  text-decoration: line-through;
+  color: #555;
+  transition: all 0.3s ease;
+}
+
+.completed-badge {
+  background-color: #e0e0e0 !important;
+  color: #6c757d !important;
+  text-decoration: line-through;
+  opacity: 0.8;
+}
+
+.calendar {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.today {
+    border: 2px solid #4FC3F7;
+    box-shadow: 0 0 12px rgba(79, 195, 247, 0.4);
+    background-color: #E1F5FE;
+    transition: 0.3s ease;
+}
+
+.today::before {
+    content: "Today";
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #4FC3F7;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.past-day {
+  opacity: 0.6;
+}
+
+.navbar {
+    border-radius: 16px;
+    margin-bottom: 2rem;
+}
+
+.logo-icon {
+    font-size: 1.8rem;
+}
+
+.objective-navbar {
+    border-radius: 16px;
+    margin-bottom: 2rem;
+    background-color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.navbar-brand {
+    font-family: 'Inter', sans-serif;
+    color: #333 !important;
+}
+
+.slogan {
+    font-style: italic;
+    font-size: 1rem;
+    color: #888;
+}
+
+/*
+bright and energetic
+visually fun
+simple to scan (like a dashboard)
+clean white or light grey bg
+accent colors for goals
+font Inter
+light neumorphism
+apple fitness + Strava vibe
+
+COLOR PALETTE
+background - #F9F9F9
+primary accent - #4FC3F7
+secondary accent - #81C784
+success/check - #00E676
+error/delete - #FF6B6B
+text (dark) - #333333
+text (light) - #55555
+*/

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}ObjectiveOne{% endblock %}
+{% block content %}
+    <nav class="navbar navbar-light bg-white shadow-sm px-4 py-2 mb-4 rounded objective-navbar">
+        <a class="navbar-brand d-flex align-items-center" href="/">
+            <span class="logo-icon me-2">🎯</span>
+            <span class="fw-bold fs-4">ObjectiveOne</span>
+        </a>
+        <span class="text-muted d-none d-md-inline slogan">Your mission. One objective at a time.</span>
+    </nav>
+
+    <div class="mb-4 px-2">
+        <h2 class="fw-bold">Your Weekly Overview</h2>
+        <p class="text-muted">See how you're tracking across all your objectives</p>
+    </div>
+
+    <div class="calendar">
+        {% for (day, weekday), goals in calendar.items() %}
+        <div class="day-box mb-4 {% if day == today %}today{% else %}past-day{% endif %}">
+            <h4>{{ weekday }}</h4>
+            <p>{{ daily_stats[day].completed }} of {{ daily_stats[day].total }} objectives done</p>
+            {% for goal, done in goals %}
+                <div class="goal-card 
+                            {% if done %}completed{% endif %}
+                            {% if day == today %}hoverable-card{% endif %}" 
+                    style="background-color: {{ goal.color }};">
+                    
+                    <div class="goal-badge goal-color-blue 
+                                {% if done %}completed-badge{% endif %}" 
+                        style="background-color: {{ goal.badge_color }};">
+                        {{ goal.name }}
+                    </div>
+                    
+                    <a href="{{ url_for('main.edit_goal', goal_id=goal.id) }}">✏️</a>
+                    <form method="POST" action="{{ url_for('main.delete_goal', goal_id=goal.id) }}" style="display:inline;" onsubmit="return confirm('Delete this objective?');">
+                        <button type="submit">🗑️</button>
+                    </form>
+                    <form method="POST" action="{{ url_for('main.complete_goal') }}">
+                        <input type="hidden" name="goal_id" value="{{ goal.id }}">
+                        <input type="hidden" name="date" value="{{ day }}">
+                        <input type="checkbox" onChange="this.form.submit()" {% if done %}checked{% endif %}>
+                    </form>
+                </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+
+
+    <form action="{{ url_for('main.add_goal') }}" method="get">
+        <button type="submit" class="btn btn-primary">Add Objective</button>
+    </form>
+    <br/>
+{% endblock %}
