@@ -5,6 +5,8 @@ db = SQLAlchemy()
 
 
 class User(UserMixin, db.Model):
+    __tablename__ = 'users'
+
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -15,6 +17,8 @@ class User(UserMixin, db.Model):
 
 
 class Goal(db.Model):
+    __tablename__ = 'goals'
+
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     name = db.Column(db.String(100), nullable=False)
@@ -25,6 +29,8 @@ class Goal(db.Model):
     end_time = db.Column(db.String(10))
 
 class Completion(db.Model):
+    __tablename__ = 'completions'
+
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     goal_id = db.Column(db.Integer, db.ForeignKey('goal.id'))
