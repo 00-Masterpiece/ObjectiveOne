@@ -26,11 +26,5 @@ app.register_blueprint(auth_blueprint)
 from routes import main as main_blueprint
 app.register_blueprint(main_blueprint)
 
-with app.app_context():
-    try:
-        db.session.execute(text('ALTER TABLE "user" ALTER COLUMN password_hash TYPE VARCHAR(512);'))
-        db.session.commit()
-        print("Migration successful!")
-    except Exception as e:
-        print(f"Migration failed: {e}")
+
 app.run(host='0.0.0.0', debug=True)
