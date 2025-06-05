@@ -2,6 +2,7 @@ from flask_login import LoginManager
 from flask import Flask
 from models import db, User
 import os
+from sqlalchemy import text
 
 
 login_manager = LoginManager()
@@ -26,5 +27,10 @@ from routes import main as main_blueprint
 app.register_blueprint(main_blueprint)
 
 with app.app_context():
-    db.create_all()
+    try:
+        db.session.execute(text('ALTER TABLE "user" ALTER COLUMN password_hash TYPE VARCHAR(512);'))
+        db.session.commit()
+        print("Migration successful!")
+    except Exception as e:
+        print(f"Migration failed: {e}")
 app.run(host='0.0.0.0', debug=True)
