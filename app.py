@@ -25,7 +25,6 @@ app.register_blueprint(auth_blueprint)
 from routes import main as main_blueprint
 app.register_blueprint(main_blueprint)
 
-if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
-    app.run(host='0.0.0.0', debug=True)
+with app.app_context():
+    db.create_all()
+app.run(host='0.0.0.0', debug=True)
